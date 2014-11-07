@@ -11,10 +11,64 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
-public class HelloTime
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+ 
+ 
+ 
+ 
+//_____________________________________________
+package retrieve_time;
+
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.net.InetAddress;
+import java.util.Date;
+import org.apache.commons.net.ntp.NTPUDPClient;
+import org.apache.commons.net.ntp.TimeInfo;
+
+import java.time.LocalDateTime;
+import static java.time.Month.*;
+
+/**
+ *
+ * @author Nevanor
+ */
+
+//@SuppressWarnings("unusedImports")
+public class Retrieve_Time 
 {
+    final static String TIME_SERVER = "time-a.nist.gov";
+
+    //@SuppressWarnings("unused")
+    public static void retrieve() throws Exception 
+    {
+        //LocalDateTime right_now = LocalDateTime.now();
+        //System.out.println("\n"+right_now+"\n");
+        
+        NTPUDPClient timeClient = new NTPUDPClient();
+        InetAddress inetAddress = InetAddress.getByName(TIME_SERVER);
+        TimeInfo timeInfo = timeClient.getTime(inetAddress);
+        long returnTime = timeInfo.getReturnTime();
+        Date time = new Date(returnTime);
+        
+        System.out.println("Time from "+TIME_SERVER+": "+time);
+    }
     public static void main(String[]args)
     {
-        System.out.println("\nHello World!");
+        try
+        {
+            retrieve();
+        }
+        catch(Exception e)
+        {
+            System.out.println("Failed to retrieve time!");
+        }
     }
 }
