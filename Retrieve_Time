@@ -1,0 +1,46 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package retrieve_time;
+
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.net.InetAddress;
+import java.util.Date;
+import org.apache.commons.net.ntp.NTPUDPClient;
+import org.apache.commons.net.ntp.TimeInfo;
+
+import java.time.LocalDateTime;
+import static java.time.Month.*;
+
+/**
+ *
+ * @author Nevanor
+ */
+
+//@SuppressWarnings("unusedImports")
+public class Retrieve_Time 
+{
+    final static String TIME_SERVER = "time-a.nist.gov";
+
+    //@SuppressWarnings("unused")
+    public static Date getTime() throws Exception 
+    {
+        //LocalDateTime right_now = LocalDateTime.now();
+        //System.out.println("\n"+right_now+"\n");
+        
+        NTPUDPClient timeClient = new NTPUDPClient();
+        InetAddress inetAddress = InetAddress.getByName(TIME_SERVER);
+        TimeInfo timeInfo = timeClient.getTime(inetAddress);
+        long returnTime = timeInfo.getReturnTime();
+        Date time = new Date(returnTime);
+        
+        //System.out.println("Time from "+TIME_SERVER+": "+time);
+        return time;
+    }
+}
