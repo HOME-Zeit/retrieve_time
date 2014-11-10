@@ -1,0 +1,27 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package retrieve_time;
+
+import retrieve_time.Retrieve_Time;
+/**
+ *
+ * @author Nevanor
+ */
+public class MainTime 
+{
+    public static void main(String[]args)
+    {
+        try
+        {
+            System.out.println(Retrieve_Time.getTime());
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
+        }
+        
+    }
+}
